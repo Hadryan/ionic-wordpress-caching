@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Wordpress JSON endpoint integration using Ionic framework and Angular caching</title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+	<script src="js/angular-cache.min.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+
+    <script src="js/app.js"></script>
+	<script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/filters.js"></script>
+  </head>
+  <body ng-app="wordpress" ng-controller="wordpressCtrl">
+
+    <ion-nav-view>
+		<ion-nav-bar delegate-handle="mainNavBar" class="bar-balanced" animation="no-animation">
+            <ion-nav-back-button class="button-icon icon ion-chevron-left backbtnwh">
+	  		</ion-nav-back-button>
+        </ion-nav-bar>
+	</ion-nav-view>
+	
+	<script id="posts.html" type="text/ng-template">
+	<ion-view view-title="All Posts">
+
+	<ion-content>
+		<ion-list>
+			<ion-item class="item-icon-right" ng-repeat="post in posts track by $index" href="#/posts/{{post.ID}}" track>
+				<h2 ng-bind-html="post.title"></h2>
+				<p ng-if="post.excerpt" ng-bind-html="post.excerpt"></p>
+				<i class="icon ion-chevron-right icon-accessory"></i>
+			</ion-item>
+		</ion-list>
+	  </ion-content>
+	</ion-view>
+	</script>
+
+	<script id="post.html" type="text/ng-template">
+	<ion-view>
+		<ion-nav-title>
+			{{::post.title}}
+		</ion-nav-title>
+		<ion-content class="padding">
+
+		<div class="card post">
+			<div class="item post-title">
+				<h2 ng-bind-html="post.title"></h2>
+			</div>
+			<div class="item item-body" ng-if="content" ng-bind-html="content | rtfcontent"></div>
+		</div>
+	  </ion-content>
+	</ion-view>
+	</script>
+  </body>
+</html>
